@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Zezoo!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+      color: #0c4a6e;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* خلفية متحركة بالنجوم والقلوب والبلالين */
+    .bg-animations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .floating-item {
+      position: absolute;
+      bottom: -50px;
+      animation: floatUp 8s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+      padding: 30px;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .active-screen {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 15px 35px rgba(2, 132, 199, 0.2);
+      border: 3px solid #38bdf8;
+      position: relative;
+    }
+
+    /* المربع الكبيييير الأنيق للصفحة الثانية */
+    .big-box-card {
+      background: rgba(255, 255, 255, 0.97);
+      width: 100%;
+      max-width: 750px;
+      min-height: 480px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-radius: 35px;
+      box-shadow: 0 20px 45px rgba(56, 189, 248, 0.3);
+      border: 4px solid #38bdf8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #0369a1;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .subtitle-cute {
+      font-size: 20px;
+      color: #0284c7;
+      margin-bottom: 25px;
+    }
+
+    .password-input {
+      width: 85%;
+      padding: 15px;
+      font-size: 28px;
+      text-align: center;
+      border: 2px solid #7dd3fc;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      outline: none;
+      background-color: #f0f9ff;
+      color: #0369a1;
+      letter-spacing: 8px;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    .key-btn {
+      padding: 16px;
+      font-size: 20px;
+      font-weight: bold;
+      background: #ffffff;
+      color: #0284c7;
+      border: 2px solid #bae6fd;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .key-btn:active {
+      background: #38bdf8;
+      color: white;
+      transform: scale(0.95);
+    }
+
+    .error-msg {
+      color: #e11d48;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+      font-size: 16px;
+    }
+
+    .title-hb {
+      font-size: 42px;
+      font-weight: 900;
+      color: #0284c7;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    }
+    .sub-hb {
+      font-size: 26px;
+      color: #0369a1;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .desc-hb {
+      font-size: 22px;
+      color: #334155;
+      margin-bottom: 35px;
+      line-height: 1.7;
+    }
+
+    /* زرار بينور وبيلمع */
+    .glow-btn {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      border: none;
+      padding: 18px 50px;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+      transition: all 0.3s ease;
+      animation: pulseGlow 2s infinite;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.6); transform: scale(1); }
+      50% { box-shadow: 0 0 25px rgba(56, 189, 248, 0.9); transform: scale(1.03); }
+      100% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.6); transform: scale(1); }
+    }
+
+    .gifts-grid {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+
+    /* صناديق الهدايا */
+    .gift-box {
+      background: #ffffff;
+      border: 3px solid #7dd3fc;
+      border-radius: 20px;
+      padding: 30px 20px;
+      width: 180px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+    }
+    .gift-box:hover {
+      transform: translateY(-10px) scale(1.08);
+      box-shadow: 0 15px 30px rgba(56, 189, 248, 0.4);
+      border-color: #0284c7;
+    }
+    .gift-icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+    .gift-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0369a1;
+    }
+
+    /* الهدية الأولى: صفحة وورد مسطرة ومزينة من الأطراف */
+    .letter-card {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      border: 4px solid #38bdf8;
+      box-shadow: inset 0 0 20px rgba(56, 189, 248, 0.15), 0 10px 25px rgba(0,0,0,0.05);
+      text-align: right;
+      line-height: 2.2;
+      font-size: 20px;
+      color: #0c4a6e;
+      position: relative;
+      background-image: linear-gradient(#bae6fd 1px, transparent 1px);
+      background-size: 100% 2.2em;
+    }
+    .letter-card::before {
+      content: '✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧';
+      display: block;
+      text-align: center;
+      color: #0284c7;
+      margin-bottom: 20px;
+      font-size: 14px;
+      letter-spacing: 3px;
+    }
+    .letter-card::after {
+      content: '✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧';
+      display: block;
+      text-align: center;
+      color: #0284c7;
+      margin-top: 20px;
+      font-size: 14px;
+      letter-spacing: 3px;
+    }
+
+    .back-btn {
+      background: #e0f2fe;
+      color: #0284c7;
+      border: 2px solid #7dd3fc;
+      padding: 10px 25px;
+      border-radius: 20px;
+      margin-top: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    .back-btn:hover {
+      background: #38bdf8;
+      color: white;
+    }
+
+    /* زرار العودة الصغير بأسفل شمال صفحة الهدايا */
+    .btn-bottom-left {
+      position: absolute;
+      bottom: -45px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #0284c7;
+      border: 1px solid #7dd3fc;
+      padding: 5px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-bottom-left:hover {
+      background: #38bdf8;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- خلفية متحركة (نجوم، قلوب، بلالين) -->
+  <div class="bg-animations" id="bgAnimations"></div>
+
+  <!-- شاشة الدخول والباسورد -->
+  <div id="screen-password" class="screen active-screen" style="max-width: 550px;">
+    <div class="card">
+      <h2>Enter our secret code 🔐</h2>
+      <div class="subtitle-cute">هيهي 🤭</div>
+      <input type="password" id="passInput" class="password-input" readonly placeholder="****">
+      <div class="keypad">
+        <button class="key-btn" onclick="pressNum('1')">1</button>
+        <button class="key-btn" onclick="pressNum('2')">2</button>
+        <button class="key-btn" onclick="pressNum('3')">3</button>
+        <button class="key-btn" onclick="pressNum('4')">4</button>
+        <button class="key-btn" onclick="pressNum('5')">5</button>
+        <button class="key-btn" onclick="pressNum('6')">6</button>
+        <button class="key-btn" onclick="pressNum('7')">7</button>
+        <button class="key-btn" onclick="pressNum('8')">8</button>
+        <button class="key-btn" onclick="pressNum('9')">9</button>
+        <button class="key-btn" onclick="clearPass()">X</button>
+        <button class="key-btn" onclick="pressNum('0')">0</button>
+        <button class="key-btn" onclick="checkPass()">✔</button>
+      </div>
+      <div id="errorMsg" class="error-msg">الباسورد غلط يا زيزو! جرب تاني 🤭</div>
+    </div>
+  </div>
+
+  <!-- شاشة التهنئة (مربع كبير جداً ومميز) -->
+  <div id="screen-celebrate" class="screen">
+    <div class="big-box-card">
+      <div class="title-hb">happy birthday ZEZOOO</div>
+      <div class="sub-hb">💙 كل سنه و حبيبي طيبب 💙</div>
+      <div class="desc-hb">بم اني مش هشوفك حالا فا هديه ثغنطوطه بقي 🤭🤭</div>
+      <button class="glow-btn" onclick="goToGifts()">تعالي معايا ✨</button>
+    </div>
+  </div>
+
+  <!-- شاشة اختيار الهدايا -->
+  <div id="screen-gifts" class="screen" style="max-width: 550px;">
+    <div class="card" style="background: transparent; border: none; box-shadow: none; position: relative;">
+      <h2 style="font-size: 32px; color: #0284c7; margin-bottom: 30px;">اختاري 👈🏾👉🏾</h2>
+      <div class="gifts-grid">
+        <div class="gift-box" onclick="openGift(1)">
+          <div class="gift-icon">🎁</div>
+          <div class="gift-title">الهدية الأولى</div>
+        </div>
+        <div class="gift-box" onclick="openGift(2)">
+          <div class="gift-icon">🎁</div>
+          <div class="gift-title">الهدية الثانية</div>
+        </div>
+      </div>
+      <!-- زر العودة للشاشة السابقة -->
+      <button class="btn-bottom-left" onclick="backToCelebrate()">🔙 العودة للتهنئة</button>
+    </div>
+  </div>
+
+  <!-- الهدية الأولى (صفحة وورد مسطرة) -->
+  <div id="gift-1-content" class="screen" style="max-width: 650px;">
+    <div class="letter-card">
+      احم احم كل سنه وانت طيب يازيزو ، مش هتكسف اقول اني نفسي ابقي جنبك دلوقتي حالا نعمل احلي movie night و سناكس و نتغطي سوا و ابقي في حضنك نتفرج و نلعب و نتكلم طولللل الليل ، بس حتي واحنا مش جنب بعض دا هيفضل يوم مميز زي صاحبه ، بحبك ياحبيب قلبي انت ، و ربنا يجمعني بيك علي خير و بسرعه كدا قبل ما اتجنننن😩❤️❤️❤️❤️❤️
+    </div>
+    <button class="back-btn" onclick="backToGifts()">رجوع للهدايا 🔙</button>
+  </div>
+
+  <!-- الهدية الثانية (أغنية عبد الحليم سبوتيفاي) -->
+  <div id="gift-2-content" class="screen" style="max-width: 550px;">
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 200px;">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6TbxWXPwXo8hclWtsP3eWP?utm_source=generator&si=04bae75bc4c240e0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        <div style="flex: 1; font-size: 24px; font-weight: bold; color: #0284c7; min-width: 150px;">
+          احم بحبك 👈🏾👉🏾💙
+        </div>
+      </div>
+      <button class="back-btn" onclick="backToGifts()">رجوع للهدايا 🔙</button>
+    </div>
+  </div>
+
+  <script>
+    // خلفية متحركة
+    const bgContainer = document.getElementById('bgAnimations');
+    const symbols = ['⭐', '💙', '🎈', '✨', '💖', '🌟', '🤍'];
+    for(let i=0; i<35; i++) {
+      const span = document.createElement('span');
+      span.className = 'floating-item';
+      span.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.fontSize = (Math.floor(Math.random() * 20) + 15) + 'px';
+      span.style.animationDuration = (Math.random() * 6 + 5) + 's';
+      span.style.animationDelay = (Math.random() * 5) + 's';
+      bgContainer.appendChild(span);
+    }
+
+    let password = "";
+
+    function pressNum(num) {
+      if(password.length < 4) {
+        password += num;
+        document.getElementById("passInput").value = "*".repeat(password.length);
+      }
+      if(password.length === 4) {
+        checkPass();
+      }
+    }
+
+    function clearPass() {
+      password = "";
+      document.getElementById("passInput").value = "";
+      document.getElementById("errorMsg").style.display = "none";
+    }
+
+    function checkPass() {
+      if(password === "1111") {
+        document.getElementById("screen-password").classList.remove("active-screen");
+        document.getElementById("screen-celebrate").classList.add("active-screen");
+      } else {
+        document.getElementById("errorMsg").style.display = "block";
+        setTimeout(clearPass, 1200);
+      }
+    }
+
+    function goToGifts() {
+      document.getElementById("screen-celebrate").classList.remove("active-screen");
+      document.getElementById("screen-gifts").classList.add("active-screen");
+    }
+
+    function backToCelebrate() {
+      document.getElementById("screen-gifts").classList.remove("active-screen");
+      document.getElementById("screen-celebrate").classList.add("active-screen");
+    }
+
+    function openGift(num) {
+      document.getElementById("screen-gifts").classList.remove("active-screen");
+      if(num === 1) {
+        document.getElementById("gift-1-content").classList.add("active-screen");
+      } else {
+        document.getElementById("gift-2-content").classList.add("active-screen");
+      }
+    }
+
+    function backToGifts() {
+      document.getElementById("gift-1-content").classList.remove("active-screen");
+      document.getElementById("gift-2-content").classList.remove("active-screen");
+      document.getElementById("screen-gifts").classList.add("active-screen");
+    }
+  </script>
+</body>
+</html>
